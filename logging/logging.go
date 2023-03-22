@@ -3,46 +3,87 @@ package logging
 import (
 	"fmt"
 	"log"
-	"mft/ruleprocessor/cloudsql"
+	"os"
+	"sync"
+	// "mft/ruleprocessor/cloudsql"
 )
 
-// error log insert statement
-var loggingErrorExec = "INSERT INTO error_logs (service,log_content) VALUES ('%s','%s');"
-
-// ErrorLogging() -- writes errors to error_logs table
-func ErrorLogging(s1 string, err error) {
-	log.Printf("ERROR: %s -- %s", s1, err)
-	cloudsql.InsertErrorRecord(fmt.Sprintf(loggingErrorExec, s1, err))
+type Logger struct {
+	level       int
+	debug       *log.Logger
+	activity    *log.Logger
+	service     *log.Logger
+	errorLog    string
+	activityLog string
+	serviceLog  string
 }
 
-// activity log insert statement
-var loggingActivityExec = "INSERT INTO activity_logs (service,log_content) VALUES ('%s','%s');"
+var once sync.Once
+var logger *Logger
 
-// ActivityLogging() -- writes activity to activity_logs table
-func ActivityLogging(s1 string, s2 string) error {
-	// TODO: add debug logging to console output
-	// Control in config flag in database so it can be enabled while running.
-	// If debug == true {write log to console} else {nothing}
-	// for now we'll output to console so we can demo the service
-	log.Printf("VERBOSE: %s -- %s", s1, s2)
-	err := cloudsql.InsertActivityRecord(fmt.Sprintf(loggingActivityExec, s1, s2))
-	if err != nil {
-		ErrorLogging("logging", err)
-		return err
-	}
-	return nil
+// GetLoggerInstance() -- instantiates our logger and ensure only one is created
+func GetLoggerInstance() *Logger {
+	once.Do(
+		func() {
+			fmt.Println("Creating Logger instance.")
+			logger = &Logger{}
+			//logger.ActivityLogging("logging.GetLoggerInstance", "Creating Logger instance.")
+		})
+	return logger
 }
 
-// activity log insert statement
-var loggingServiceExec = "INSERT INTO service_logs (package,log_content) VALUES ('%s','%s');"
-
-// ServiceLogging() -- Verbose Logging about the system, startup, initialization, etc.
-func ServiceLogging(s1 string, s2 string) {
-	// s1 is package name
-	// s2 is the message
-	log.Printf("DEBUG: %s -- %s", s1, s2)
-	err := cloudsql.InsertServiceRecord(fmt.Sprintf(loggingServiceExec, s1, s2))
-	if err != nil {
-		ErrorLogging("logging", err)
+// ErrorLogging() -- For logging errors
+func (l *Logger) ErrorLogging(pkg string, msg string) {
+	if l.level <= 2 {
+		f, err := os.OpenFile(l.errorLog, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			log.Fatal("failed to open error.log file")
+		}
+		l.debug = log.New(f, "[DEBUG] -- ", log.Ldate|log.Ltime|log.Lmicroseconds|log.LUTC)
+		l.debug.Printf("-- %s -- %s", pkg, msg)
 	}
+}
+
+// ActivityLogging() -- for logging app activity
+func (l *Logger) ActivityLogging(pkg string, msg string) {
+	// this will always log application activity.
+	if l.level <= 2 {
+		f, err := os.OpenFile(l.activityLog, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			log.Fatal("failed to open activity.log file")
+		}
+		l.activity = log.New(f, "[ACTIVITY] -- ", log.Ldate|log.Ltime|log.Lmicroseconds|log.LUTC)
+		l.activity.Printf("-- %s -- %s", pkg, msg)
+	}
+}
+
+// ServiceLogging() -- For logging service states
+func (l *Logger) ServiceLogging(pkg string, msg string) {
+	if l.level <= 2 {
+		f, err := os.OpenFile(l.serviceLog, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			log.Fatal("failed to open service.log file")
+		}
+		l.service = log.New(f, "[SERVICE] -- ", log.Ldate|log.Ltime|log.Lmicroseconds|log.LUTC)
+		l.service.Printf("-- %s -- %s", pkg, msg)
+	}
+}
+
+// SetLogLevel() -- for setting our logger's log level.
+func (l *Logger) SetLogLevel(level int) {
+	// check logging flag for logging level
+	// Only ERROR, DEBUG, ALL implemented currently
+	// ALL = 1 -- DEBUG = 2 -- ERROR = 5
+	// returning 1 so all logging runs right now -- set in appinit.go
+	l.level = level
+
+	// TODO: implement a logging flag that can be switched without restarting the application
+	// Config file or DB value. Create API endpoint for enabling and changing log levels
+}
+
+// SetLogFileNames() -- for setting log file names
+func (l *Logger) SetLogFileNames(actlog string, errlog string, svclog string) {
+	l.activityLog = actlog
+	l.errorLog = errlog
+	l.serviceLog = svclog
 }

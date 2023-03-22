@@ -9,7 +9,7 @@ POST calls
 /api/v1/customers/addcustomer 
     -- Adds a new customer record
     -- Will also add folders to a customer record
-        curl --location --request POST 'localhost:8080/api/v1/customers/addcustomer' \
+        curl --location --request POST 'localhost:3000/api/v1/customers/addcustomer' \
             --header 'Content-Type: application/json' \
             --data-raw '{ "arnumber": "USG1001", "name": "Ultimate Software1", "files": [
                 {"filename": "FileName", "origin": "path/to/monitor/for/file", "destination": "path/to/move/file/to"
@@ -20,13 +20,15 @@ GET calls
 -- /api/v1/folders 
     -- returns all monitored folders
 
-    https://mft.mft-dev.us-east4.dev.gcp.int
 
-    curl --location --request POST 'https://mft.mft-dev.us-east4.dev.gcp.int/api/v1/customers/addcustomer' \
+    curl --location --request POST 'https://localhost:3000/api/v1/customers/addcustomer' \
             --header 'Content-Type: application/json' \
             --data-raw '{ "arnumber": "TST1000", "name": "TESTCo", "files": [{"filename": "DumFile", "origin": "/Volumes/data_exchange/matt-test", "destination": "/Volumes/data_exchange/matt-test2"}]}'
 
 
-            curl --location --request POST 'http://localhost:8080/api/v1/customers/addcustomer' \
+            curl --location --request POST 'http://localhost:3000/api/v1/customers/addcustomer' \
             --header 'Content-Type: application/json' \
             --data-raw '{ "arnumber": "TST1000", "name": "TESTCo", "files": [{"filename": "testfile.zip", "origin": "/Volumes/data_exchange/matt-test", "destination": "/Volumes/data_exchange/matt-test2"}]}'
+
+Get with page parameter
+curl -X GET "http://localhost:3000/api/v1/customers?page=1&count=2000"

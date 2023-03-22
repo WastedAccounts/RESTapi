@@ -12,8 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// FolderCalls
-// -- Handles incoming api calls from the /api/v1/folders endpoint
+// FolderCalls -- Handles incoming api calls from the /api/v1/folders endpoint
 func FolderCalls(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r)
 
@@ -30,14 +29,12 @@ func FolderCalls(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Folders Struct
-// -- used for storing folders list from folders collection
+// Folders Struct -- used for storing folders list from folders collection
 type Folders struct {
 	Folders []string `bson:"folders"`
 }
 
-// getAllFolders
-// -- return a list of all monitored folders from the folders collection
+// getAllFolders() -- return a list of all monitored folders from the folders collection
 func getAllFolders(w http.ResponseWriter, r *http.Request) *Folders {
 	var result *Folders
 	conn := mongodb.MongoConnPool.Database(mongodb.MongoDBName).Collection("folders")
@@ -51,14 +48,3 @@ func getAllFolders(w http.ResponseWriter, r *http.Request) *Folders {
 	}
 	return result
 }
-
-// if r.URL.Path == "/api" {
-// 	switch r.Method {
-// 	case http.MethodGet:
-// 	case http.MethodPost:
-// 	case http.MethodDelete:
-// 	case http.MethodPut:
-// 	default:
-// 		w.WriteHeader(http.StatusNotImplemented)
-// 	}
-// }
