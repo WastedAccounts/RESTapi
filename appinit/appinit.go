@@ -12,11 +12,6 @@ import (
 
 var (
 	Run string = "run" // Global flag we can use to shut down the app, gracefully or not.
-	// mongodbReady   bool
-	// ProjectID      string
-	// Bucket       = os.Getenv("BUCKET_NAME")
-	// gacJson string //GOOGLE_APPLICATION_CREDENTIALS json file location
-	// topics  []string
 )
 
 // Init() -- this is for initializing the application

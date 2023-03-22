@@ -1,0 +1,24 @@
+[ACTIVITY] -- 2023/03/22 19:26:13.415863 -- api.v1.folders -- GET /api/v1/folders?1=2&5=no&yes=probablyNot HTTP/1.1
+Host: localhost:3000
+connection: keep-alive
+user-agent: PostmanRuntime/7.31.1
+accept: */*
+cache-control: no-cache
+postman-token: 3615e3a3-7780-4a4f-9150-0117d4ce4f73
+accept-encoding: gzip, deflate, br
+[ACTIVITY] -- 2023/03/22 19:34:07.667443 -- api.v1.folders -- GET /api/v1/employees?1=2&5=no&yes=probablyNot HTTP/1.1
+Host: localhost:3000
+connection: keep-alive
+user-agent: PostmanRuntime/7.31.1
+accept: */*
+cache-control: no-cache
+postman-token: 4a1bbdbe-b532-4652-b4b6-938efaf98108
+accept-encoding: gzip, deflate, br
+[ACTIVITY] -- 2023/03/22 19:34:17.691134 -- api.v1.folders -- GET /api/v1/customers?1=2&5=no&yes=probablyNot HTTP/1.1
+Host: localhost:3000
+accept: */*
+cache-control: no-cache
+postman-token: 9db9d70b-6ac3-42d5-ada1-ce0590f5c4e2
+accept-encoding: gzip, deflate, br
+connection: keep-alive
+user-agent: PostmanRuntime/7.31.1

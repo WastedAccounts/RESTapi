@@ -1,5 +1,10 @@
-[SERVICE] -- 2023/03/22 17:41:54.182053 -- appinit.Init -- Logging system initialized
-[SERVICE] -- 2023/03/22 17:41:54.182187 -- appinit.Init.godotenv -- No .env file found. Will use local variables
-[SERVICE] -- 2023/03/22 17:41:54.182319 -- appinit.Init -- Registering and initializing API endpoint
-[SERVICE] -- 2023/03/22 17:41:54.182481 -- appinit.Init -- Application is properly initialized
-[SERVICE] -- 2023/03/22 17:41:54.182583 -- main -- Initialization Complete
+[SERVICE] -- 2023/03/22 19:26:07.838211 -- appinit.Init -- Logging system initialized
+[SERVICE] -- 2023/03/22 19:26:07.838447 -- appinit.Init.godotenv -- No .env file found. Will use local variables
+[SERVICE] -- 2023/03/22 19:26:07.838552 -- appinit.Init -- Registering and initializing API endpoint
+[SERVICE] -- 2023/03/22 19:26:07.838729 -- appinit.Init -- Application is properly initialized
+[SERVICE] -- 2023/03/22 19:26:07.838816 -- main -- Initialization Complete
+[SERVICE] -- 2023/03/22 19:33:57.024700 -- appinit.Init -- Logging system initialized
+[SERVICE] -- 2023/03/22 19:33:57.024822 -- appinit.Init.godotenv -- No .env file found. Will use local variables
+[SERVICE] -- 2023/03/22 19:33:57.024922 -- appinit.Init -- Registering and initializing API endpoint
+[SERVICE] -- 2023/03/22 19:33:57.025117 -- appinit.Init -- Application is properly initialized
+[SERVICE] -- 2023/03/22 19:33:57.025198 -- main -- Initialization Complete
