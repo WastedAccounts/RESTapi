@@ -1,1 +1,1 @@
-A simple RESTful API framework with logging. 
+A simple framework with app initialization, logging and a RESTful API endpoint.
